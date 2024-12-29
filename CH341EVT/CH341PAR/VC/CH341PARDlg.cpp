@@ -38,8 +38,7 @@ protected:
 
 CAboutDlg::CAboutDlg() : CDialog(CAboutDlg::IDD)
 {
-	//{{AFX_DATA_INIT(CAboutDlg)
-	//}}AFX_DATA_INIT
+	AfxMessageBox(_T("Version :2.0  https://github.com/nsynet/ch34x_tool "));
 }
 
 BEGIN_MESSAGE_MAP(CAboutDlg, CDialog)
@@ -130,7 +129,7 @@ BOOL CCH341PARDlg::OnInitDialog()
 	m_TabMain.InsertItem(0,"EPP并口");//插入Tab控件页面
 	m_TabMain.InsertItem(1,"MEM并口");
 	m_TabMain.InsertItem(2,"EEPROM配置");
-	m_TabMain.InsertItem(3,"两线串口");
+	m_TabMain.InsertItem(3,"I2C stream");
 	m_TabMain.InsertItem(4,"EEPROM读写");
 	m_TabMain.InsertItem(5,"数字I/O");
 	m_epp.Create(IDD_DLGEPP,GetDlgItem(IDC_TABMAIN));

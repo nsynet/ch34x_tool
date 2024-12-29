@@ -24,7 +24,7 @@ public:
 	CString	m_srddatabuf;
 	CString	m_swrdatabuf;
 	CString	m_srddatalen;
-	CString	m_swrdatalen;
+	int	m_swrdatalen;
 	//}}AFX_DATA
 
 

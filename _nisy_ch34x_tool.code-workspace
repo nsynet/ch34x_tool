@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"search.exclude": {
+			"CH341EVT\CH341PAR\VC\Debug\*"      :true,
+			"CH341EVT\CH341PAR\VC\.vs\*"      :true,
+		},
+		"files.exclude": {
+			"CH341EVT\CH341PAR\VC\Debug\*"      :true,
+			"CH341EVT\CH341PAR\VC\.vs\*"      :true,
+		}
+	}
+}

@@ -20,7 +20,7 @@ CI2CSPage::CI2CSPage() : CPropertyPage(CI2CSPage::IDD)
 	m_srddatabuf = _T("");
 	m_swrdatabuf = _T("");
 	m_srddatalen = _T("");
-	m_swrdatalen = _T("");
+	//m_swrdatalen = _T("");
 	//}}AFX_DATA_INIT
 }
 
@@ -35,7 +35,7 @@ void CI2CSPage::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_EDIT_I2CSRDDATA, m_srddatabuf);
 	DDX_Text(pDX, IDC_EDIT_I2CSWRDATA, m_swrdatabuf);
 	DDX_Text(pDX, IDC_EDIT_I2CSRDLEN, m_srddatalen);
-	DDX_Text(pDX, IDC_EDIT_I2CSWRLEN, m_swrdatalen);
+	//DDX_Text(pDX, IDC_EDIT_I2CSWRLEN, m_swrdatalen);
 	//}}AFX_DATA_MAP
 }
 
@@ -59,7 +59,8 @@ void CI2CSPage::OnSend()
 	UCHAR rbuffer[mMAX_BUFFER_LENGTH]="";
 	ULONG mwlen=0,mrlen=0;
 	UpdateData(TRUE);
-	mwlen = CPublic::mStrToBcd(m_swrdatalen);
+	
+	mwlen = (strlen(m_swrdatabuf) +1)/ 2;
 	mrlen=CPublic::mStrToBcd(m_srddatalen);
 	if (mwlen==0 && mrlen==0)
 	{
@@ -81,8 +82,8 @@ void CI2CSPage::OnSend()
 		MessageBox("请输入小于0x400的长度","CH341",MB_OK|MB_ICONSTOP);
 		return;
 	}
-	if (mwlen > strlen(m_swrdatabuf)/2)
-		mwlen = strlen(m_swrdatabuf)/2;
+	
+
 	memcpy(mwBuf,m_swrdatabuf,mwlen*2);
 	memcpy(wbuffer, CPublic::mStrtoVal(mwBuf,mwlen*2),mwlen);
 	
@@ -90,19 +91,19 @@ void CI2CSPage::OnSend()
 	{
 		try
 		{
-//			if (!CH341SetStream(CPublic::mIndex, 0x03))
-//			{
-//				MessageBox("xx");
-//			}
+			if (!CH341SetStream(CPublic::mIndex, 0x00))
+			{
+				MessageBox("CH341SetStream Fail !");
+			}
 			if(!CH341StreamI2C (CPublic::mIndex, mwlen, &wbuffer[0], mrlen, &rbuffer[0] ))
 			{   
-				m_swrdatalen.Format("%x", 0);
+				//m_swrdatalen.Format("%x", 0);
 				m_srddatalen.Format("%x", 0);     //返回已读写的数据个数
 				MessageBox("流模式读写数据失败！","CH341",MB_OK|MB_ICONSTOP);
 			}
 			else   //发送成功
 			{
-				m_swrdatalen.Format("%x", mwlen);
+				//m_swrdatalen.Format("%x", mwlen);
 				m_srddatalen.Format("%x", mrlen);     //返回已读写的数据个数
 				UINT i=0,j=0;
 				for(i=0; i<mrlen;i++)
